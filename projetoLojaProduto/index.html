@@ -16,7 +16,11 @@
             <h2>Portal do Aluno</h2>
         </div>
 
+        <div class="letter">
+            <p>A</p>
+        </div>
         <ul>
+            
             <li><a href="#"><i class="fas fa-home"></i> Início</a></li>
             <li><a href="#" class="active"><i class="fas fa-plus-circle"></i> Cadastrar Produtos</a></li>
 
@@ -35,7 +39,7 @@
         <header>
             <div class="search-wrapper">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Pesquisar...">
+                <input type="text" id="search-input" placeholder="Pesquisar...">
             </div>
             <div class="header-actions">
                 <i class="fa-solid fa-bell"></i>
@@ -48,7 +52,7 @@
             </div>
         </header>
 
-        <section class="form-section">
+        <section class="form-section" onsubmit="event.preventDefault();cadastrarNovoProduto(this)">
             <h1>Cadastro de Novo Produto - Passo a Passo</h1>
             <p class="subtitle">Olá, Aluno! Preencha as informações abaixo para adicionar um produto.</p>
 
@@ -61,19 +65,20 @@
                     <div class="input-group">
                         <label>Nome do Produto</label>
                         
-                        <input type="text" name="nomeProduto" placeholder="Camisa Polo Básica" required>
+                        <input type="text" name="nomeProduto" placeholder="Nome do Produto" required>
                     </div>
 
                     <div class="input-group">
                         <label>Descrição Curta</label>
                         
-                        <textarea name="descricao" rows="2" placeholder="Descrição Polo Básica"></textarea>
+                        <textarea name="descricao" rows="2" placeholder="Descrição básica do produto"></textarea>
                     </div>
 
                     <div class="input-group">
                         <label>Categoria</label>
                         
-                        <select name="categoria">
+                        <select name="categoria" required>
+                            <option value="" disabled selected hidden>Escolha uma categoria...</option>
                             <option value="Vestuário">Vestuário</option>
                             <option value="Eletrônicos">Eletrônicos</option>
                             <option value="Alimentos">Alimentos</option>
@@ -88,7 +93,7 @@
                     <div class="input-group">
                         <label>Preço de Custo (R$)</label>
                         
-                        <input type="number" name="costPrice" step="0.01" placeholder="25.00" oninput="atualizarPrecoVenda()">
+                        <input type="number" name="costPrice" step="0.01" placeholder=" R$ 0,00" oninput="atualizarPrecoVenda()">
                         <div class="info">
                             <i class="fa-solid fa-circle-info"></i>
                             <small>Preço inserido manualmente</small>
@@ -128,6 +133,10 @@
                         <button type="button" class="btn-upload" id="btnUpload">
                             Upload
                         </button>
+                        <div class="infoimg">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <small>Tamanho máximo para upload: 4MB</small>
+                        </div>
 
                         <p id="fileName"></p>
                     </div>

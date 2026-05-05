@@ -33,6 +33,7 @@ function cadastrarNovoProduto(formElement) {
     const novoProduto = {
         id: Date.now(),
         nome: formData.get('nomeProduto') || "Sem nome",
+        descricao: formData.get('descricao') || "Nenhuma descrição informada",
         categoria: formData.get('categoria') || "Sem categoria",
         precoCusto: precoCusto,
         precoVenda: precoCusto * 1.25,
@@ -77,7 +78,28 @@ function atualizarPrecoVenda() {
     const custo = parseFloat(document.querySelector('input[name="costPrice"]').value) || 0;
 
     const venda = custo * 1.25;
-
+    
     document.getElementById("salePrice").innerText =
         "R$ " + venda.toFixed(2);
+}
+
+const inputBuscaIndex = document.getElementById('search-input');
+
+
+inputBuscaIndex.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        executarBusca();
+    }
+});
+
+function executarBusca() {
+    const valor = inputBuscaIndex.value.trim();
+    
+    if (valor !== "") {
+       
+        window.location.href = `produtos.html?busca=${encodeURIComponent(valor)}`;
+    } else {
+        
+        window.location.href = `produtos.html`;
+    }
 }
