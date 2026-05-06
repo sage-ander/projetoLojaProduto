@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meus Produtos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #0b4c96;
+            --primary-dark: #083a73;
+            --bg: linear-gradient(135deg, #e9f0ff, #f8fafc);
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --danger: #ef4444;
+            --border: #e5e7eb;
+            --shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+        .container { padding: 28px; flex: 1; }
+        .container h1 { font-size: 24px; font-weight: 700; margin-bottom: 20px; text-align: center; }
+
+       
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; justify-items: center; }
+        
+        .card { 
+            position: relative; background: var(--card); border-radius: 16px; overflow: hidden; 
+            box-shadow: var(--shadow); border: 1px solid var(--border); transition: all 0.25s ease; cursor: pointer;
+        }
+
+        .card:hover { transform: translateY(-6px); box-shadow: 0 0px 100px rgba(0,0,0,0.15); }
+
+        
+        .card-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 160px;
+            background: rgba(11, 76, 150, 0.7); color: white;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: 0.3s; font-weight: bold; z-index: 1;
+        }
+        .card:hover .card-overlay { opacity: 1; }
+
+        .card img { width: 100%; height: 160px; object-fit: cover; display: block; }
+        .card h3 { margin: 12px 12px 6px; font-size: 16px; }
+        .card p { margin: 4px 12px; font-size: 13px; color: var(--muted); }
+
+        
+        #tela-detalhes {
+            display: none; background: white; padding: 30px; border-radius: 20px;
+            max-width: 600px; margin: 0 auto; box-shadow: var(--shadow);
+        }
+        .detalhes-info { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+
+        .delete-btn {
+            position: absolute; top: 10px; right: 10px; background: var(--danger);
+            color: white; border: none; padding: 6px 10px; border-radius: 8px;
+            cursor: pointer; opacity: 0; transition: 0.2s; z-index: 2;
+        }
+        .card:hover .delete-btn { opacity: 1; }
+
+        footer { background: #fff; padding: 16px; border-top: 1px solid var(--border); text-align: center; }
+        .btn-voltar { padding: 10px 18px; border: none; background: var(--primary); color: white; border-radius: 10px; cursor: pointer; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="visao-lista">
+        <h1>📦 Produtos Cadastrados</h1>
+        <div class="grid" id="lista"></div>
+    </div>
+
+    <div id="tela-detalhes">
+        <h1 id="det-nome">Nome do Produto</h1>
+        <div id="det-img-container"></div>
+        <div class="detalhes-info">
+            <p><strong>📂 Categoria:</strong> <span id="det-cat"></span></p>
+            <p><strong>💰 Preço de Venda:</strong> <span id="det-venda"></span></p>
+            <p><strong>📦 Estoque Atual:</strong> <span id="det-estoque"></span></p>
+            <p><strong>📝 Descrição:</strong> <span id="det-desc"></span></p>
+            <p><small>📅 Cadastrado em: <span id="det-data"></span></small></p>
+        </div>
+        <button class="btn-voltar" style="margin-top:20px; width:100%" onclick="voltarParaLista()">Voltar para a Lista</button>
+    </div>
+</div>
+
+<footer>
+    <button class="btn-voltar" onclick="window.history.back()">← Sair</button>
+    <p style="color:#777; font-size:12px; margin-top: 10px;">&copy; 2026 Portal do Aluno.</p>
+</footer>
+
+<script>
+
+const listaProdutos = JSON.parse(localStorage.getItem('produtos')) || [];
+const listaContainer = document.getElementById('lista');
+const visaoLista = document.getElementById('visao-lista');
+const telaDetalhes = document.getElementById('tela-detalhes');
+
+function carregarProdutos() {
+    listaContainer.innerHTML = "";
+    
+    if (listaProdutos.length === 0) {
+        listaContainer.innerHTML = "<p style='color:#666;'>Nenhum produto cadastrado.</p>";
+        listaContainer.className = 'grid2';
+    } else {
+        listaContainer.className = 'grid';
+        listaProdutos.forEach(prod => {
+            const div = document.createElement('div');
+            div.classList.add('card');
+            
+            
+            div.onclick = (e) => {
+                if (!e.target.classList.contains('delete-btn')) {
+                    exibirDadosProduto(prod.id);
+                }
+            };
+
+            div.innerHTML = `
+                <div class="card-overlay">Ver Detalhes</div>
+                ${prod.imagem ? `<img src="${prod.imagem}">` : ''}
+                <h3>${prod.nome}</h3>
+                <p><strong>Venda:</strong> R$ ${prod.precoVenda.toFixed(2)}</p>
+                <p><strong>Estoque:</strong> ${prod.estoque}</p>
+                
+                <button class="delete-btn" onclick="excluirProduto(${prod.id})">
+                    🗑 Excluir
+                </button>
+            `;
+            listaContainer.appendChild(div);
+        });
+    }
+}
+
+function exibirDadosProduto(id) {
+    
+    const p = listaProdutos.find(item => item.id === id);
+    if (!p) return;
+
+    
+    document.getElementById('det-nome').innerText = p.nome;
+    document.getElementById('det-cat').innerText = p.categoria;
+    document.getElementById('det-venda').innerText = `R$ ${p.precoVenda.toFixed(2)}`;
+    document.getElementById('det-estoque').innerText = p.estoque;
+    document.getElementById('det-data').innerText = p.dataCadastro;
+    
+
+    const campoDesc = document.getElementById('det-desc');
+    if(campoDesc) campoDesc.innerText = p.descricao || "Sem descrição disponível";
+
+    const imgContainer = document.getElementById('det-img-container');
+    imgContainer.innerHTML = p.imagem 
+        ? `<img src="${p.imagem}" style="width:100%; border-radius:12px; max-height:250px; object-fit:contain; background:#f0f0f0;">` 
+        : '';
+
+    
+    visaoLista.style.display = 'none';
+    telaDetalhes.style.display = 'block';
+}
+
+function voltarParaLista() {
+    telaDetalhes.style.display = 'none';
+    visaoLista.style.display = 'block';
+}
+
+function excluirProduto(id) {
+    if (confirm("Tem certeza que deseja excluir este produto?")) {
+        const index = listaProdutos.findIndex(prod => prod.id === id);
+        if (index !== -1) {
+            listaProdutos.splice(index, 1);
+            localStorage.setItem('produtos', JSON.stringify(listaProdutos));
+            carregarProdutos(); 
+        }
+    }
+}
+
+carregarProdutos();
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const termoDaUrl = urlParams.get('busca');
+
+    if (termoDaUrl) {
+        
+        const inputLocal = document.getElementById('inputBusca');
+        if (inputLocal) inputLocal.value = termoDaUrl;
+
+        
+        filtrarProdutosPeloTermo(termoDaUrl);
+    }
+});
+
+function filtrarProdutosPeloTermo(termo) {
+    const termoBusca = termo.toLowerCase();
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        const nomeProduto = card.querySelector('h3').innerText.toLowerCase();
+        card.style.display = nomeProduto.includes(termoBusca) ? "block" : "none";
+    });
+}
+</script>
+</body>
+</html>
