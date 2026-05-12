@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Aluno - Cadastro de Produto</title>
+
+    <link rel="stylesheet" href="../CSS/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo">
+            <h2>Portal do Aluno</h2>
+        </div>
+
+        <ul>
+            <li><a href="#"><i class="fas fa-home"></i> Início</a></li>
+            <li><a href="#" class="active"><i class="fas fa-plus-circle"></i> Cadastrar Produtos</a></li>
+
+            <li><a href="produtos.html"><i class="fas fa-box"></i> Meus Produtos</a></li>
+
+            <li><a href="#"><i class="fas fa-tags"></i> Preços</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+        </ul>
+
+        <div class="user-info">
+            <p>User </p>
+        </div>
+    </nav>
+
+    <section class="main-content">
+        <header>
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Pesquisar...">
+            </div>
+            <div class="header-actions">
+                <i class="fa-solid fa-bell"></i>
+
+                <abbr title="User">
+                    <button onclick="exibirPerfil()" style="background:none; border:none; cursor:pointer; color: var(--text);">
+                        <i class="fa-solid fa-user"></i>
+                        </button>
+                </abbr>
+            </div>
+        </header>
+
+        <section class="form-section">
+            <h1>Cadastro de Novo Produto - Passo a Passo</h1>
+            <p class="subtitle">Olá, Aluno! Preencha as informações abaixo para adicionar um produto.</p>
+
+            <form id="productForm">
+
+                
+                <div class="form-step">
+                    <h3><span>1</span> Informações Básicas</h3>
+
+                    <div class="input-group">
+                        <label>Nome do Produto</label>
+                        
+                        <input type="text" name="nomeProduto" placeholder="Camisa Polo Básica" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Descrição Curta</label>
+                        
+                        <textarea name="descricao" rows="2" placeholder="Descrição Polo Básica"></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Categoria</label>
+                        
+                        <select name="categoria">
+                            <option value="Vestuário">Vestuário</option>
+                            <option value="Eletrônicos">Eletrônicos</option>
+                            <option value="Alimentos">Alimentos</option>
+                        </select>
+                    </div>
+                </div>
+
+                
+                <div class="form-step">
+                    <h3><span>2</span> Definição de Preços</h3>
+
+                    <div class="input-group">
+                        <label>Preço de Custo (R$)</label>
+                        
+                        <input type="number" name="costPrice" step="0.01" placeholder="25.00" oninput="atualizarPrecoVenda()">
+                        <div class="info">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <small>Preço inserido manualmente</small>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Preço de Venda (R$)</label>
+
+                        <span id="salePrice">R$ 0.00</span>
+
+                        <div class="info">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <small>Método de cálculo = Preço de Custo * 1,25</small>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                
+                <div class="form-step">
+                    <h3><span>3</span> Estoque e Mídia</h3>
+
+                    <div class="input-group">
+                        <label>Quantidade em Estoque</label>
+                        
+                        <input type="number" name="estoque" placeholder="100">
+                    </div>
+
+                    <div class="upload-box" id="dropzone">
+                         <i class="fas fa-camera"></i>
+                        <p>Adicionar Imagem</p>
+
+                        <input type="file" name="upload" id="fileInput" accept="image/*" style="display: none;">
+
+                        <p id="fileName"></p>
+                    </div>
+                </div>
+
+            </form>
+            <div class="form-actions">
+                <button type="submit" form="productForm" class="btn-submit">Cadastrar Produto</button>
+                <button type="reset"  form="productForm" class="btn-clear">Limpar Form</button>
+                <button type="button" class="btn-verProduto" onclick="abrirTabelaProdutos()">
+                    Ver Todos os Produtos
+                </button>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Curso de Desenvolvimento WEB</p>
+        </footer>
+    </section>
+
+    <script src="../JavaScript/script.js"></script>
+</body>
+</html>

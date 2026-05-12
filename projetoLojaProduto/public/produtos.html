@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Produtos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/produtos.css">
+
+</head>
+
+<body>
+
+    <div class="dashboard-dinamico">
+
+        <h1 class="dash-titulo">📊 Dashboard de Produtos</h1>
+
+        <div class="dash-cards">
+
+            <div class="mini-dash-card">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span class="mini-dash-label">Total de Produtos</span>
+                <span class="mini-dash-valor" id="dash-total">0</span>
+            </div>
+
+            <div class="mini-dash-card">
+                <i class="fa-solid fa-warehouse"></i>
+                <span class="mini-dash-label">Valor em Estoque</span>
+                <span class="mini-dash-valor" id="dash-estoque">R$ 0,00</span>
+            </div>
+
+            <div class="mini-dash-card">
+                <i class="fa-solid fa-chart-line"></i>
+                <span class="mini-dash-label">Lucro Presumido</span>
+                <span class="mini-dash-valor" id="dash-lucro">R$ 0,00</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="container">
+        <h1>📦 Produtos Cadastrados</h1>
+    </div>
+
+    <div id="abas-container">
+        <button class="aba aba-ativa" onclick="filtrarCards('Todos', this)">Todos</button>
+        <button class="aba" onclick="filtrarCards('Eletrônicos', this)">Eletrônicos</button>
+        <button class="aba" onclick="filtrarCards('Vestuário', this)">Vestuário</button>
+        <button class="aba" onclick="filtrarCards('Alimentos', this)">Alimentos</button>
+    </div>
+
+
+    <div id="lista"></div>
+
+    <footer>
+        <button class="btn-voltar" onclick="window.history.back()">← Voltar</button>
+
+        <p style="color:#777; font-size:12px;">
+            &copy; 2026 Portal do Aluno. Todos os direitos reservados.
+        </p>
+    </footer>
+
+    <script src="../JavaScript/produtos.js"></script>
+
+</body>
+</html>

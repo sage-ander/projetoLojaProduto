@@ -1,0 +1,235 @@
+:root {
+    --primary: #0b4c96;
+    --primary-dark: #083a73;
+    --bg: #45f1f1;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --danger: #ef4444;
+    --border: #e5e7eb;
+    --shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.dashboard-dinamico {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+}
+
+/* Título do dashboard */
+.dash-titulo {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+}
+
+/* Container dos mini-cards */
+.dash-cards {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* Mini-card individual */
+.mini-dash-card {
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 20px 28px;
+    flex: 1;
+    min-width: 180px;
+    max-width: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mini-dash-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.12);
+}
+
+/* Ícones dentro do mini-card */
+.mini-dash-card i {
+    font-size: 28px;
+    color: var(--primary);
+}
+
+/* Label do mini-card */
+.mini-dash-label {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Valor do mini-card */
+.mini-dash-valor {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+}
+
+.container h1 {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Abas */
+#abas-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.aba {
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #4409e7;
+    color: #faf8f8;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.aba:hover {
+    background-color: #34acdb;
+    transform: scale(1.08);
+}
+
+.aba-ativa {
+    background-color: #3498db;
+    color: white;
+    border-bottom: 3px solid #2980b9;
+}
+
+/* Container de cards */
+#lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+    place-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 40px;
+}
+
+.nenhum-produto {
+    grid-column: 1 / -1; /* ocupa todas as colunas do grid */
+    text-align: center;   /* centraliza horizontalmente */
+    font-size: 14px;
+    font-style: bold;
+    color: var(--);
+    margin-top: 20px;
+}
+
+/* Card do produto */
+.card {
+    position: relative;
+    background: var(--card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: all 0.25s ease;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+}
+
+.card h3 {
+    margin: 12px 12px 6px;
+    font-size: 18px;
+}
+
+.card p {
+    margin: 4px 12px;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.4;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: 0.2s ease;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.card:hover .delete-btn {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    color: var(--text);
+    font-size: 0.8rem;
+    position: relative;
+}
